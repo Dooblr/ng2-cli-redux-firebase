@@ -7,3 +7,5 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 npm i
 ng serve
 ```
+
+open localhost:4200 in your browser.
