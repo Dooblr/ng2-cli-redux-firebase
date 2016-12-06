@@ -1,0 +1,30 @@
+<div class="card">
+  <h3>Edit Menu Items</h3>
+  <hr/>
+  <form [formGroup]="itemTypeForm" novalidate
+        (submit)="this.DataActions.postItemTypesToFb(itemTypeForm)">
+    <!--edit items-->
+    <div formArrayName="itemTypes">
+      <div *ngFor="let itemType of itemTypeForm.controls.itemTypes.controls;
+                   let i=index"
+           class="panel panel-default">
+        <div class="form-group" [formGroupName]="i" >
+          <label>Item {{i + 1}}</label>
+          <input type="text"
+                 formControlName="text"
+                 placeholder=""/>
+          <button class="btn btn-sm btn-danger inline remove-button"
+                  *ngIf="itemTypeForm.controls.itemTypes.controls.length > 1"
+                  (click)="removeItem(i)">remove</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addItem()">
+      Add another item +
+    </button>
+    <hr/>
+    <!--completion buttons-->
+    <button type="submit" class="btn btn-success">Update</button>
+  </form>
+</div>
+

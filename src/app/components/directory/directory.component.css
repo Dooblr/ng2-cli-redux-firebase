@@ -1,0 +1,75 @@
+li {
+  list-style: none;
+}
+.lineItem {
+  list-style: square;
+}
+.editDeleteButtons {
+  float: right;
+  height: 100%;
+}
+.editDeleteButtons * {
+  margin: 0.1rem;
+  transform: translateX(-2.5%);
+  width: 100%;
+}
+.inline {
+  display: inline-block;
+}
+.itemSelect {
+  max-width: 15rem;
+}
+.quantitySelect {
+  max-width: 6rem;
+}
+.order {
+  display: flex;
+  max-width: 50rem;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem #808080;
+  border: 1px solid #add8e6;
+  background: #f5fffa;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+.order-text {
+  width: 100%;
+}
+.order-index {
+  position: absolute;
+  margin-left: -5.5rem;
+  margin-top: 1.5rem;
+}
+.edit-form {
+  margin: 0.5rem;
+  margin-left: -2rem;
+  max-width: 50rem;
+  flex-direction: row;
+  box-shadow: 0 0.25rem 0.5rem #808080;
+  border: 1px solid #add8e6;
+  background: #f5fffa;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+}
+.add-order-button {
+  padding: 0.5rem;
+  width: 30vw;
+  display: block;
+  margin: auto;
+}
+.close-add-button {
+  float: right;
+  margin: 0.5rem;
+}
+.remove-button {
+  float: right;
+}
+.edit-item {
+  background: #f8f8ff;
+  box-shadow: 0 0.5rem 1rem #808080;
+  padding: 1rem;
+}
+.modal-content {
+  max-width: 45rem;
+}

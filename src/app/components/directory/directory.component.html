@@ -1,0 +1,132 @@
+<!--ORDERS COMPONENT-->
+  <h3>Orders</h3>
+  <label>Look up Order By Customer:</label>
+<!--SEARCH-->
+  <input [(ngModel)]="term"
+         type="text"
+         name="searchField"
+         title="search">
+
+  <hr/>
+
+<!--ADD ORDER MODAL-->
+  <!--button-->
+    <button type="button"
+            class="btn btn-success btn-lg add-order-button"
+            data-toggle="modal"
+            data-target="#addModal">
+            Add Order</button>
+  <!-- Modal -->
+    <div class="modal fade"
+         id="addModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel3"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button id="close-modal-button"
+                    class="btn btn-danger close-add-button"
+                    data-toggle="modal"
+                    data-target="#addModal">
+                    X</button>
+            <br/>
+            <add-order></add-order>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<hr/>
+
+<!--TABLE-->
+<ul>
+  <li *ngFor="let order of orders$ | async | filter:term; let i=index"
+    class="order" [class.order]="!(showEditArray$ | async)[order.key]">
+    <h4 class="order-index">{{i + 1}}</h4>
+    <div class="order-text">
+      <!--name-->
+      <h4 class="inline" *ngIf="!(showEditArray$ | async)[order.key]">Name: {{order.name}}</h4>
+      <!--items-->
+      <ul>
+        <li *ngFor="let item of order.items"
+            [hidden]="(showEditArray$ | async)[order.key]"
+            class="lineItem">
+          {{item.text}} x{{item.quantity}}
+        </li>
+      </ul>
+    </div>
+    <!--action buttons-->
+    <div class="editDeleteButtons inline"
+         *ngIf="!(showEditArray$ | async)[order.key]">
+      <div>
+        <button (click)="toggleEditMode(order)"
+                class="btn btn-primary">Edit</button>
+      </div>
+      <div>
+        <button (click)="this.DataActions.removeFromFirebase(order.key)"
+                class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+
+<!--EDIT FORM-->
+    <form [formGroup]="editForm" novalidate
+          (ngSubmit)="this.DataActions.updateToFirebase(order.key,editForm)"
+          [hidden]="!(showEditArray$ | async)[order.key]"
+          class="edit-form">
+      <!--edit name-->
+      <label>Name
+        <input type="text" class="form-control" formControlName="name"
+             [attr.placeholder]="order.name">
+      </label>
+      <!--<small *ngIf="!editForm.controls.name.valid" class="text-danger">-->
+        <!--A name is required-->
+      <!--</small>-->
+      <!--edit items-->
+      <!--TODO: modular input form component-->
+      <div formArrayName="items">
+        <div *ngFor="let item of editForm.controls.items.controls; let i=index">
+          <div class="form-group edit-item" [formGroupName]="i">
+            <label>Item {{i + 1}}</label>
+            <select class="form-control inline itemSelect"  id="text"
+                    required title="item text"
+                    formControlName="text">
+              <option *ngIf="this.DataService.size(order.items[i]) >= i"
+                      value="" disabled selected>
+                      {{order.items[i].text}}</option>
+              <option *ngFor="let itemType of itemTypes$ | async"
+                      [value]="itemType">{{itemType}}</option>
+            </select>
+            <!--quantity itemType-->
+            <label>x</label>
+            <select class="form-control inline quantitySelect"  id="quantity"
+                    required title="item quantity"
+                    formControlName="quantity">
+              <option *ngIf="this.DataService.size(order.items[i]) >= i"
+                      value="" disabled selected>
+                      {{order.items[i].quantity}}</option>
+              <option *ngFor="let quantity of this.DataService.quantityNumbers;"
+                      [value]="quantity">{{quantity}}</option>
+            </select>
+            <!--remove-->
+            <button class="btn btn-danger inline remove-button"
+                    *ngIf="editForm.controls.items.controls.length > 1"
+                    (click)="removeItem(i)">remove</button>
+          </div>
+          <br/>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addItem()">
+        Add another item +
+      </button>
+      <hr/>
+      <!--completion buttons-->
+      <button type="submit" class="btn btn-small btn-success">Update</button>
+      <button type="button" (click)="this.uiActions.directory_toggleEditAtKey(order.key)" class="btn btn-warning">Cancel</button>
+    </form>
+    <br/>
+  </li>
+</ul>
+
+

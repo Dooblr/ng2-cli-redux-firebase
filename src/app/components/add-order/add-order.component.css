@@ -1,0 +1,27 @@
+input{
+  max-width:14rem;
+}
+#text{
+  margin-left:1rem;
+  max-width:12rem;
+  display:inline-block;
+}
+#quantity{
+  max-width:3rem;
+  display:inline-block;
+}
+
+.button-remove{
+  margin-left: 10%;
+}
+
+hr{
+  max-width:20rem;
+  margin-left:0;
+}
+.form-group {
+  max-width:40rem;
+  background: ghostwhite;
+  box-shadow: 0 .5rem 1rem gray;
+  padding: 1rem;
+}

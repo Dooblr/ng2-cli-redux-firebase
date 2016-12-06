@@ -1,0 +1,11 @@
+.container{
+  background:ghostwhite;
+  max-width:40rem;
+  padding:2rem;
+  box-shadow:0 .5rem 1rem lightgray;
+}
+.form-invalid{
+  margin-bottom:.5rem;
+  padding-left:.5rem;
+  border-left:.25rem solid red;
+}

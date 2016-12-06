@@ -1,0 +1,27 @@
+<div class="container">
+  <h3>ng-Redux</h3>
+  <nav>
+    <a routerLink="/login" routerLinkActive="active">
+      <button class="btn btn-lg btn-primary">Login</button>
+    </a>
+    <a routerLink="/directory" routerLinkActive="active">
+      <button class="btn btn-lg btn-primary"
+              [class.disabled]="!(isLoggedIn$ | async)"
+              (click)="checkIfButtonDisabled()">Directory</button>
+    </a>
+    <a routerLink="/options" routerLinkActive="active">
+      <button class="btn btn-lg btn-primary"
+              [class.disabled]="!(isLoggedIn$ | async)"
+              (click)="checkIfButtonDisabled()">Options</button>
+    </a>
+  </nav>
+  <br/>
+  <p class="alert alert-warning"
+     [@fadeInOut]="tellUserAuthText"
+     *ngIf="tellUserAuthText">Please log in first.</p>
+  <hr/>
+  <!--<counter></counter>-->
+  <!--<counter-info></counter-info>-->
+  <router-outlet></router-outlet>
+</div>
+

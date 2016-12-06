@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>New Order</h4>
+      </div>
+      <form [formGroup]="myForm" novalidate
+            (ngSubmit)="
+              this.DataActions.postOrderToFirebase(
+                myForm.value.name,
+                myForm.value.items);
+              this.uiActions.directory_toggleAddOrderModal()">
+
+        <label>Name</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="name">
+
+          <small *ngIf="!myForm.controls.name.valid"
+                 class="text-danger">
+                 A name is required</small>
+
+        <label style="opacity:0;">_</label>
+        <!--TODO: Turn this into a modular input form component-->
+        <!--items-->
+        <div formArrayName="items">
+          <div *ngFor="let item of myForm.controls.items.controls; let i=index">
+            <div class="form-group" [formGroupName]="i">
+
+              <label>Item {{i + 1}}</label>
+              <select class="form-control dropdown"
+                      id="text"
+                      required
+                      formControlName="text"
+                      name="text">
+                <option *ngFor="let itemType of itemTypes$ | async"
+                        [value]="itemType.text">{{itemType.text}}</option>
+              </select>
+              <!--quantity dropdown-->
+              <label>x</label>
+              <select class="form-control dropdown"  id="quantity"
+                      required
+                      formControlName="quantity" name="quantity">
+                <option *ngFor="let quantity of this.DataService.quantityNumbers"
+                        [value]="quantity">{{quantity}}</option>
+              </select>
+
+              <!--remove-->
+              <button class="btn btn-danger inline button-remove"
+                      *ngIf="myForm.controls.items.controls.length > 1"
+                      (click)="removeItem(i)">remove</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addItem()">
+          Add another item +
+        </button>
+        <hr/>
+        <button type="submit"
+                class="btn btn-success"
+                [disabled]="!myForm.valid">Submit</button>
+        <hr/>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container">
+  <h3>Login</h3>
+  <hr/>
+  <form [formGroup]="loginForm"
+        (ngSubmit)="AuthActions.login(loginForm.value.email,loginForm.value.password)">
+    <div class="form-group">
+      <input
+          [ngClass]="{'form-invalid':!loginForm.controls['email'].valid}"
+          placeholder="email" class="form-control"
+          type="text" name="email" title="email"
+          formControlName="email"/>
+      <input
+          [ngClass]="{'form-invalid':!loginForm.controls['password'].valid}"
+          placeholder="password" class="form-control"
+          type="password" name="password" title="password"
+          formControlName="password"/>
+    </div>
+    <br/>
+
+    <p *ngIf="isLoggedIn$ | async">Logged In</p>
+    <p *ngIf="!(isLoggedIn$ | async)">Logged Out</p>
+
+    <button type="submit" class="btn btn-success"
+            [disabled]="!loginForm.valid"
+            *ngIf="!(isLoggedIn$ | async)">Login</button>
+
+    <button type="button" class="btn btn-warning"
+            (click)="AuthActions.logout()"
+            *ngIf="isLoggedIn$ | async">Logout</button>
+
+    <button type="button" class="btn btn-default"
+            [disabled]="!loginForm.valid"
+            (click)="AuthActions.register()">Register</button>
+  </form>
+</div>
+
